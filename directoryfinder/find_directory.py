@@ -38,8 +38,7 @@ with open(wlist, "r") as wordlist:
 
       if(v):
         print("=-"*25)
-        print(f"Testando: {url}\n")
-        print(f"{yellow()}Status code: {res.status_code}{default()}\n")
+        print(f"Testando: {url}")
         print("=-"*25)
       
       if(res.status_code < 300):
