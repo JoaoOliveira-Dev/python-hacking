@@ -1,8 +1,10 @@
 def default():
   return str("\033[m")
-def find():
+def green():
   return str("\033[1;32m")
-def n_find():
+def red():
   return str("\033[0;31m")
-def redirect():
+def yellow():
   return "\033[0;33m"
+def cian():
+  return "\033[0;36m"
