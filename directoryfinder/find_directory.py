@@ -6,28 +6,32 @@ from colors import default, green, red, yellow, cian
 args = sys.argv
 c_300 = []
 c_200 = []
-n = 0
+wlist = "directory-medium.txt"
 
 # Exemplo: https://www.google.com
 site = args[1]
 v = False
 
 # Armazena(ou apenas executa) cada argumento em sua respectiva variável
+if("-h" or "--help" in args):
+  print(f"{cian()}usage: find_directory.py https://www.google.com [-v]\n\n")
+  print(f"options:\n -h, --help  show this help message and exit\n -v  show all server attempts\n{default()}")
+
+  sys.exit(1)
+
 if("-v" in args):
   v = True
 
-if("-h" in args):
-  print(f"{cian()}python3 find_directory.py https://www.google.com [-v]\n\n")
-  print(f"options:\n -h  show this help message and exit\n -v  show all server attempts\n{default()}")
+if("-sw" in args):
+  wlist = "directory-small.txt"
 
-  sys.exit(1)
-# while n < len(args):
-#   if(args[n] == "-v"):
-#     v = True
-  
-#   n += + 1
+if("-mw" in args):
+  wlist = "directory-medium.txt"
 
-with open("directory-small.txt", "r") as wordlist:
+if("-lw" in args):
+  wlist = "directory-large.txt"
+
+with open(wlist, "r") as wordlist:
   words = wordlist
 
   for w in words:
@@ -42,10 +46,10 @@ with open("directory-small.txt", "r") as wordlist:
         print(f"{yellow()}Status code: {res.status_code}{default()}\n")
         print("=-"*25)
       
-      if(res.status_code >= 200):
+      if(res.status_code < 300):
         c_200.append(url)
       
-      elif(res.status_code >= 300):
+      elif(res.status_code < 400):
         c_300.append(url)
 
     except requests.exceptions.MissingSchema:
@@ -58,6 +62,13 @@ with open("directory-small.txt", "r") as wordlist:
 
       break
     
-print("fora do balango beiço")
+print("URLs encontradas mas foram redirecionados: ")
+for redirect in c_300:
+  print(yellow() + redirect + default())
+
+print("=-"*25)
+print("URLs encontradas com sucesso: ")
+for sucess in c_200:
+  print(green() + sucess + default())
 
 
