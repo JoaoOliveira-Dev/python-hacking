@@ -6,16 +6,18 @@ from colors import default, green, red, yellow, cian
 args = sys.argv
 c_300 = []
 c_200 = []
-wlist = "directory-medium.txt"
+wlist = "directory-default.txt"
 
 # Exemplo: https://www.google.com
 site = args[1]
 v = False
 
 # Armazena(ou apenas executa) cada argumento em sua respectiva variável
-if("-h" or "--help" in args):
-  print(f"{cian()}usage: find_directory.py https://www.google.com [-v]\n\n")
-  print(f"options:\n -h, --help  show this help message and exit\n -v  show all server attempts\n{default()}")
+if("-h" in args):
+  print(f"{cian()}usage: find_directory.py https://www.google.com [-v] [-sw]\n\n"
+        f"options:\n -h, --help  show this help message and exit\n"
+        f" -v          show all server attempts\n"
+        f" -sw         set the SMALL wordlist{default()}")
 
   sys.exit(1)
 
@@ -24,12 +26,6 @@ if("-v" in args):
 
 if("-sw" in args):
   wlist = "directory-small.txt"
-
-if("-mw" in args):
-  wlist = "directory-medium.txt"
-
-if("-lw" in args):
-  wlist = "directory-large.txt"
 
 with open(wlist, "r") as wordlist:
   words = wordlist
