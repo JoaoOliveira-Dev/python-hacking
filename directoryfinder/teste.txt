@@ -1,3 +1,5 @@
 aluno/#/login
+search
 aluno
+imghp
 uayjhwdaw

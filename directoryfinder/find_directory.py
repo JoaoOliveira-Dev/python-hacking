@@ -27,25 +27,26 @@ if("-v" in args):
 if("-sw" in args):
   wlist = "directory-small.txt"
 
+if("-tw" in args):
+  wlist = "teste.txt"
+
 with open(wlist, "r") as wordlist:
   words = wordlist
 
+  print("=-"*25)
   for w in words:
-    url = f"{site}/{w}"
+    url = f"{site}/{w.strip()}"
 
     try:
       res = requests.get(url)
 
       if(v):
-        print("=-"*25)
         print(f"Testando: {url}")
-        print("=-"*25)
-      
-      if(res.status_code < 300):
-        c_200.append(url)
-      
-      elif(res.status_code < 400):
+            
+      if 300 <= res.status_code < 400:
         c_300.append(url)
+      elif res.status_code < 300:
+        c_200.append(url)
 
     except requests.exceptions.MissingSchema:
       print(f"Erro: URL inválida - Certifique-se de incluir um esquema válido (http/https) em {site}")
@@ -57,13 +58,18 @@ with open(wlist, "r") as wordlist:
 
       break
     
-print("URLs encontradas mas foram redirecionados: ")
-for redirect in c_300:
-  print(yellow() + redirect + default())
+
+if (len(c_300) > 1):
+  print("=-"*25)
+  print("URLs encontradas mas foram redirecionados: ")
+  for redirect in c_300:
+    print(yellow() + redirect + default())
+
+else:
+  print("=-"*25)
+  print("Nenhum redirecionamento encontrado")
 
 print("=-"*25)
 print("URLs encontradas com sucesso: ")
 for sucess in c_200:
   print(green() + sucess + default())
-
-
